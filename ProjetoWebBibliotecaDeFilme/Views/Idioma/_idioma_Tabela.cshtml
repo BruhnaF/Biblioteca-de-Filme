@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ProjetoWebBibliotecaDeFilme.ViewModel.Idioma_Item_TabelaViewModel>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var item in Model.ToList())
+            {
+                <tr>
+                    <td>@item.IdiomaId</td>
+                    <td>@item.IdiomaNome</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">Não possui Idiomas Cadastrados.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

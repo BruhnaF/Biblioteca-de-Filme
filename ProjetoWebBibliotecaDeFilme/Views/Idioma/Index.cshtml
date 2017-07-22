@@ -1,0 +1,49 @@
+﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.IdiomaIndexViewModel
+
+@{
+    ViewBag.Title = "Lista de idiomas Cadastrados";
+}
+
+<h2>Idiomas</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.NomeIdioma, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.NomeIdioma, new { @class = "form-control", id = "inputNome" })
+        </div>
+    </div>
+
+    <div class="row" id="tabelaIdiomas">
+        @{ Html.RenderPartial("_idioma_Tabela", Model.Itens); }
+    </div>
+            }
+
+@section scripts{
+    <script>
+      var _nomeIdioma = $("#inputNome");
+      var _tabelaIdioma = $("#tabelaIdiomas");
+
+        _nomeIdioma.on("keyup", function () {
+            var texto = _nomeIdioma.val();
+            if (texto.length > 3) {
+                CarregaTabelaIdioma(_nomeIdioma.val());
+            }
+            else { CarregaTabelaIdioma("") }
+        });
+
+        $(document).ready(function () {
+            CarregaTabelaIdioma("");
+        });
+
+      function CarregaTabelaIdioma(idioma)
+      {
+          var url = '@Url.Action("BuscarItensIdiomas", "Idioma")';
+          var parametros = { nome: idioma }
+          _tabelaIdioma.load(url, parametros);
+      }
+
+
+    </script>
+}

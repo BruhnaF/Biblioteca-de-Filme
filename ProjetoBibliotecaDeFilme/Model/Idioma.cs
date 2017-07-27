@@ -5,6 +5,11 @@ namespace ProjetoBibliotecaDeFilme.Model
 {
     public class Idioma
     {
+        public Idioma()
+        {
+                
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [MaxLength(9)]

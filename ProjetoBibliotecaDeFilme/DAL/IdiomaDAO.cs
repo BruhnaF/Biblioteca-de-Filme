@@ -2,6 +2,8 @@
 using ProjetoBibliotecaDeFilme.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Data.Entity;
 
 namespace ProjetoBibliotecaDeFilme.DAL
 {
@@ -36,6 +38,54 @@ namespace ProjetoBibliotecaDeFilme.DAL
         public IEnumerable<Idioma> Listar()
         {
             return _context.Idiomas.ToList();
+        }
+
+        public void Salvar(Idioma idioma)
+        {
+            _context.Idiomas.Add(idioma);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Busca no Context por Id.
+        /// </summary>
+        /// <param name="idioma">Valor a ser Comparado.</param>
+        /// <returns></returns>
+        public Idioma BuscarPorId(string idiomaId)
+        {
+            var idioma = _context.Idiomas.Where(x => x.IdiomaId == idiomaId).FirstOrDefault();
+            return idioma;
+        }
+
+        /// <summary>
+        /// Verifica se dados recebidos, ja existem no Context.
+        /// </summary>
+        /// <param name="idioma">Valor a ser Comparado.</param>
+        /// <returns></returns>
+        public bool JaExiste(Idioma idioma)
+        {
+            var jaExiste = false;
+            var idiomaId = _context.Idiomas.Where(x => x.IdiomaId == idioma.IdiomaId).FirstOrDefault();
+            var descricao = _context.Idiomas.Where(x => x.Descricao == idioma.Descricao).FirstOrDefault();
+
+            if (idiomaId != null || descricao != null)
+            {
+                jaExiste = true;
+            }
+
+            return jaExiste;
+        }
+
+        public void Editar(Idioma idioma)
+        {
+            _context.Entry(idioma).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void Excluir(Idioma idioma)
+        {
+            _context.Idiomas.Remove(idioma);
+            _context.SaveChanges();
         }
     }
 }

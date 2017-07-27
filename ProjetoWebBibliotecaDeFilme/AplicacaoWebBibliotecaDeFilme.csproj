@@ -146,11 +146,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\RetornoMensagem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\IdiomaIndexViewModel.cs" />
+    <Compile Include="ViewModel\IdiomaViewModel.cs" />
     <Compile Include="ViewModel\Idioma_Item_TabelaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="carregando.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -175,6 +178,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -197,6 +201,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Idioma\Index.cshtml" />
     <Content Include="Views\Idioma\_idioma_Tabela.cshtml" />
+    <Content Include="Views\Idioma\Cadastrar.cshtml" />
+    <Content Include="Views\Idioma\Editar.cshtml" />
+    <Content Include="Views\Shared\_ModalResultado.cshtml" />
+    <Content Include="Views\Shared\_ModalConfirmacao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

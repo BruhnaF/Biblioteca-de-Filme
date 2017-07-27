@@ -1,6 +1,12 @@
 ﻿using ProjetoBibliotecaDeFilme.BLL;
+using ProjetoBibliotecaDeFilme.Enumerador;
+using ProjetoBibliotecaDeFilme.Model;
+using ProjetoBibliotecaDeFilme.Utils;
+using ProjetoWebBibliotecaDeFilme.Helper;
 using ProjetoWebBibliotecaDeFilme.ViewModel;
+using System;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 
 namespace ProjetoWebBibliotecaDeFilme.Controllers
@@ -26,7 +32,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
-        { 
+        {
             var view = new IdiomaIndexViewModel();
             return View(view);
         }
@@ -42,9 +48,9 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             var listaIdiomas = _idiomaBLO.Listar();
 
             if (!string.IsNullOrEmpty(nome))
-                listaIdiomas 
-                    = listaIdiomas.Where(x => 
-                    x.Descricao.ToUpper().Contains(nome.ToUpper()) 
+                listaIdiomas
+                    = listaIdiomas.Where(x =>
+                    x.Descricao.ToUpper().Contains(nome.ToUpper())
                     || x.IdiomaId.ToUpper().Contains(nome.ToUpper()));
 
             var listaidiomasView
@@ -55,9 +61,141 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     IdiomaId = x.IdiomaId,
                     IdiomaNome = x.Descricao
                 }
-                ).ToList();
+                ).OrderBy(x => x.IdiomaId).ToList();
 
             return PartialView("_idioma_Tabela", listaidiomasView);
+        }
+
+        /// <summary>
+        /// Mostra a Pagina Para Cadastrar o Idioma
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Cadastrar()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Recebe os dados da View e envia para o Context
+        /// </summary>
+        /// <param name="idioma"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Cadastrar(IdiomaViewModel view)
+        {
+            var retorno = new RetornoMensagem();
+
+            try
+            {
+                var idioma = new Idioma()
+                {
+                    IdiomaId = view.IdiomaId,
+                    Descricao = view.Descricao
+                };
+
+                _idiomaBLO.Salvar(idioma);
+
+                retorno.Mensagem
+                    = string.Format("Idioma {0} - {1} Cadastrado com Sucesso. <br />", view.IdiomaId, view.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Cadastrar.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+
+            return Json(retorno);
+        }
+
+        /// <summary>
+        /// Mostra a Pagina Para Editar o Idioma
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Editar(string id)
+        {
+            var idioma = _idiomaBLO.BuscarPorId(id);
+            var view = new IdiomaViewModel(idioma);
+            return View(view);
+        }
+
+        /// <summary>
+        /// Recebe os dados da View e envia para o Context
+        /// </summary>
+        /// <param name="idioma"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Editar(IdiomaViewModel view)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var idioma = new Idioma()
+                {
+                    IdiomaId = view.IdiomaId,
+                    Descricao = view.Descricao
+                };
+                _idiomaBLO.Editar(idioma);
+
+                retorno.Mensagem
+                    = string.Format("Idioma {0} - {1} Editado com Sucesso. <br />", view.IdiomaId, view.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Editar.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+
+            return Json(retorno);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(string id)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var idiomaMensagem = _idiomaBLO.BuscarPorId(id);
+
+                _idiomaBLO.Excluir(id);
+                retorno.Mensagem
+                   = string.Format("Idioma {0} - {1} Excluido com Sucesso. <br />", idiomaMensagem.IdiomaId, idiomaMensagem.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Excluir.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
         }
     }
 }

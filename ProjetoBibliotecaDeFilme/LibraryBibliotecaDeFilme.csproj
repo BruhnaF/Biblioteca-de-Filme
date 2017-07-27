@@ -50,6 +50,7 @@
     <Compile Include="BLL\IdiomaBLO.cs" />
     <Compile Include="Context\ContextBibliotecaDeFilme.cs" />
     <Compile Include="DAL\IdiomaDAO.cs" />
+    <Compile Include="Enumerador\TipoMensagem.cs" />
     <Compile Include="Migrations\201707221740009_CriacaodeIdiomas.cs" />
     <Compile Include="Migrations\201707221740009_CriacaodeIdiomas.Designer.cs">
       <DependentUpon>201707221740009_CriacaodeIdiomas.cs</DependentUpon>
@@ -57,6 +58,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Idioma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ProjetoException.cs" />
+    <Compile Include="Utils\Validacao.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707221740009_CriacaodeIdiomas.resx">

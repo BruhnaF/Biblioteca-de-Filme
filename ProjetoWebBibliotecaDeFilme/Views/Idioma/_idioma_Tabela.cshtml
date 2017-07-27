@@ -5,6 +5,7 @@
         <tr>
             <th>Código</th>
             <th>Descrição</th>
+            <th colspan="2">Opções</th>
         </tr>
     </thead>
     <tbody>
@@ -15,6 +16,15 @@
                 <tr>
                     <td>@item.IdiomaId</td>
                     <td>@item.IdiomaNome</td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", "Idioma", new { id = item.IdiomaId },
+                        new { @class = "btn btn-primary" })
+                    </td>
+                    <td>
+                        <button type = "button" class="btn btn-primary btnExcluir" id="@item.IdiomaId">
+                            Excluir
+                        </button>
+                    </td>
                 </tr>
             }
         }

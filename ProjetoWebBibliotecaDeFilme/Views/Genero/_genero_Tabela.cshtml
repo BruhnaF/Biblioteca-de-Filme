@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjetoWebBibliotecaDeFilme.ViewModel.Idioma_Item_TabelaViewModel>
+﻿@model IEnumerable<ProjetoWebBibliotecaDeFilme.ViewModel.Genero_Item_TabelaViewModel>
 
 <table class="table table-striped">
     <thead>
@@ -14,14 +14,14 @@
             foreach (var item in Model.ToList())
             {
                 <tr>
-                    <td>@item.IdiomaId</td>
+                    <td>@item.GeneroId</td>
                     <td>@item.Descricao</td>
                     <td>
-                        @Html.ActionLink("Editar", "Editar", "Idioma", new { id = item.IdiomaId },
+                        @Html.ActionLink("Editar", "Editar", "Genero", new { id = item.GeneroId},
                         new { @class = "btn btn-primary" })
                     </td>
                     <td>
-                        <button type = "button" class="btn btn-primary btnExcluir" id="@item.IdiomaId">
+                        <button type="button" class="btn btn-primary btnExcluir" id="@item.GeneroId">
                             Excluir
                         </button>
                     </td>
@@ -31,9 +31,8 @@
         else
         {
             <tr>
-                <td colspan="2">Não possui Idiomas Cadastrados.</td>
+                <td colspan="2">Não possui Generos Cadastrados.</td>
             </tr>
         }
     </tbody>
 </table>
-

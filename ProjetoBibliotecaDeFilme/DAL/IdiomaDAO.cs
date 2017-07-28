@@ -40,6 +40,10 @@ namespace ProjetoBibliotecaDeFilme.DAL
             return _context.Idiomas.ToList();
         }
 
+        /// <summary>
+        /// Salva Idioma.
+        /// </summary>
+        /// <param name="idioma">Idioma a ser Salvo.</param>
         public void Salvar(Idioma idioma)
         {
             _context.Idiomas.Add(idioma);

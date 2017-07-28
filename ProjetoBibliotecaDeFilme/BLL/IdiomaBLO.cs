@@ -35,7 +35,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
         /// <summary>
         /// Retorna uma Lista de Idiomas Cadastrados.
         /// </summary>
-        /// <returns> Retorna Lista de idiomas.</returns>
+        /// <returns>Retorna Lista de idiomas.</returns>
         public IEnumerable<Idioma> Listar()
         {
             return _idiomaDAO.Listar();

@@ -18,6 +18,7 @@ namespace ProjetoBibliotecaDeFilme.Context
         /// DbSet Idiomas.
         /// </summary>
        public DbSet<Idioma> Idiomas { get; set; }
+       public DbSet<Genero> Generos { get; set; }
 
         /// <summary>
         /// Ajuste ao criar entity.

@@ -8,12 +8,12 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel
     public class Idioma_Item_TabelaViewModel
     {     
         /// <summary>
-        /// Representa o Id do Idioma
+        /// Representa o Id do Idioma.
         /// </summary>
         public string IdiomaId { get; set; }
         /// <summary>
-        /// Representa o Nome do Idioma
+        /// Representa a Descricao do Idioma.
         /// </summary>
-        public string IdiomaNome { get; set; }
+        public string Descricao { get; set; }
     }
 }

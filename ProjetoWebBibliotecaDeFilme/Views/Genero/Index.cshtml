@@ -1,0 +1,55 @@
+﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.GeneroIndexViewModel
+
+@{
+    ViewBag.Title = "Lista de generos Cadastrados";
+}
+
+<h2>Lista de Generos</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="form-group" >
+            @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputNome" })
+        </div>
+    </div>
+
+    <div class="row" id="tabelaGeneros">
+        @{ Html.RenderPartial("_genero_Tabela", Model.Itens); }
+    </div>
+            }
+
+@section scripts{
+    <script>
+        var generoId = "";
+        $.blockUI({ message: '<img src = "../../carregando.gif" />'});
+
+        var _nomeGenero = $("#inputNome");
+        var _tabelaGenero = $("#tabelaGeneros");
+
+        _nomeGenero.on("keyup", function () {
+            $.blockUI({ message: '<img src = "../../carregando.gif" />'});
+            var texto = _idIdioma.val();
+            if (texto.length > 3) {
+                CarregaTabelaGenero(_nomeGenero.val());
+            }
+            else { CarregaTabelaGenero("") }
+        });
+
+        $(document).ready(function () {
+            CarregaTabelaGenero("");
+        });
+
+        function CarregaTabelaGenero(genero){
+            var url = '@Url.Action("BuscarItensGeneros", "Genero")';
+            var parametro = { nome: genero };
+            _tabelaGenero.load(url, parametro);
+            setTimeout(function () {
+                $.unblockUI();
+                //bindTabela();
+            }, 500);
+      }
+
+    </script>
+}

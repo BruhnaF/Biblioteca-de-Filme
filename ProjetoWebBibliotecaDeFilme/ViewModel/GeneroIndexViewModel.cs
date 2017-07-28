@@ -4,24 +4,24 @@ using System.ComponentModel;
 namespace ProjetoWebBibliotecaDeFilme.ViewModel
 {
     /// <summary>
-    /// Representa tela Index Idioma Cadastrados.
+    ///  Representa tela Index Genero Cadastrados.
     /// </summary>
-    public class IdiomaIndexViewModel
+    public class GeneroIndexViewModel
     {
-        public IdiomaIndexViewModel()
+        public GeneroIndexViewModel()
         {
-            Itens = new List<Idioma_Item_TabelaViewModel>();
+            Itens = new List<Genero_Item_TabelaViewModel>();
         }
 
         /// <summary>
         /// Representa o campo de busca da pagina.
         /// </summary>
-        [DisplayName("Descrição do Idioma")]
+        [DisplayName("Descrição do Genero")]
         public string Descricao { get; set; }
 
         /// <summary>
-        /// Representa uma lista de Idiomas
+        /// Representa uma lista de Generos.
         /// </summary>
-        public List<Idioma_Item_TabelaViewModel> Itens { get; set; }
+        public List<Genero_Item_TabelaViewModel> Itens { get; set; }
     }
 }

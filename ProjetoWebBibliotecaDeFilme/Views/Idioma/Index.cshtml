@@ -10,15 +10,15 @@
 {
     <div class="row">
         <div class="form-group">
-            @Html.LabelFor(x => x.NomeIdioma, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.NomeIdioma, new { @class = "form-control", id = "inputNome" })
+            @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputNome" })
         </div>
     </div>
 
     <div class="row" id="tabelaIdiomas">
         @{ Html.RenderPartial("_idioma_Tabela", Model.Itens); }
     </div>
-            }
+}
 
 @Html.Partial("_ModalConfirmacao")
 @Html.Partial("_ModalResultado")

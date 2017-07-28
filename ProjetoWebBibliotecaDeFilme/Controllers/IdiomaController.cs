@@ -6,7 +6,6 @@ using ProjetoWebBibliotecaDeFilme.Helper;
 using ProjetoWebBibliotecaDeFilme.ViewModel;
 using System;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 
 namespace ProjetoWebBibliotecaDeFilme.Controllers
@@ -53,17 +52,17 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     x.Descricao.ToUpper().Contains(nome.ToUpper())
                     || x.IdiomaId.ToUpper().Contains(nome.ToUpper()));
 
-            var listaidiomasView
+            var listaView
                 = listaIdiomas
                 .Select(x =>
                 new Idioma_Item_TabelaViewModel
                 {
                     IdiomaId = x.IdiomaId,
-                    IdiomaNome = x.Descricao
+                    Descricao = x.Descricao
                 }
                 ).OrderBy(x => x.IdiomaId).ToList();
 
-            return PartialView("_idioma_Tabela", listaidiomasView);
+            return PartialView("_idioma_Tabela", listaView);
         }
 
         /// <summary>

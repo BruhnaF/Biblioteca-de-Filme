@@ -141,6 +141,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GeneroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdiomaController.cs" />
     <Compile Include="Global.asax.cs">
@@ -148,6 +149,8 @@
     </Compile>
     <Compile Include="Helper\RetornoMensagem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\GeneroIndexViewModel.cs" />
+    <Compile Include="ViewModel\Genero_Item_TabelaViewModel.cs" />
     <Compile Include="ViewModel\IdiomaIndexViewModel.cs" />
     <Compile Include="ViewModel\IdiomaViewModel.cs" />
     <Compile Include="ViewModel\Idioma_Item_TabelaViewModel.cs" />
@@ -205,6 +208,8 @@
     <Content Include="Views\Idioma\Editar.cshtml" />
     <Content Include="Views\Shared\_ModalResultado.cshtml" />
     <Content Include="Views\Shared\_ModalConfirmacao.cshtml" />
+    <Content Include="Views\Genero\_genero_Tabela.cshtml" />
+    <Content Include="Views\Genero\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -58,7 +58,6 @@ namespace ProjetoBibliotecaDeFilme.BLL
         public void Salvar(Idioma idioma)
         {
             ValidaIdioma(idioma);
-
             JaExiste(idioma);
 
             _idiomaDAO.Salvar(idioma);
@@ -74,7 +73,8 @@ namespace ProjetoBibliotecaDeFilme.BLL
             var jaExiste = _idiomaDAO.JaExiste(idioma);
             if (jaExiste)
             {
-                throw new ProjetoException(String.Format("O Idioma {0} - {1} Já Exite", idioma.IdiomaId, idioma.Descricao));
+                throw new ProjetoException(String.Format("O Idioma {0} - {1} Já Exite", 
+                                                        idioma.IdiomaId, idioma.Descricao));
             }
         }
 
@@ -90,7 +90,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
 
         private void ValidaIdioma(Idioma idioma)
         {
-            StringBuilder mensagem = new StringBuilder();
+            var mensagem = new StringBuilder();
 
             var codigoEhNulo = Validacao.EhVazio(idioma.IdiomaId);
             var tamanhoCodigoMaior = Validacao.TamanhoEhMaior(idioma.IdiomaId, 9);
@@ -117,6 +117,10 @@ namespace ProjetoBibliotecaDeFilme.BLL
             }
         }
 
+        /// <summary>
+        /// Excluir Idioma.
+        /// </summary>
+        /// <param name="idIdioma">Valor a ser Excluido.</param>
         public void Excluir(string idIdioma)
         {
             var idioma = _idiomaDAO.BuscarPorId(idIdioma);

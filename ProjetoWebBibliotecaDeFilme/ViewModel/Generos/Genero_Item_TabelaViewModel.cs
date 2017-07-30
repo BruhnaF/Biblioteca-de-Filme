@@ -1,4 +1,4 @@
-﻿namespace ProjetoWebBibliotecaDeFilme.ViewModel
+﻿namespace ProjetoWebBibliotecaDeFilme.ViewModel.Generos
 {
     /// <summary>
     ///  Representa os Itens de Uma Tabela de Generos.

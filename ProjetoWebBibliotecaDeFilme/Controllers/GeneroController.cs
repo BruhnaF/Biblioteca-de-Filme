@@ -1,5 +1,10 @@
 ﻿using ProjetoBibliotecaDeFilme.BLL;
-using ProjetoWebBibliotecaDeFilme.ViewModel;
+using ProjetoBibliotecaDeFilme.Enumerador;
+using ProjetoBibliotecaDeFilme.Model;
+using ProjetoBibliotecaDeFilme.Utils;
+using ProjetoWebBibliotecaDeFilme.Helper;
+using ProjetoWebBibliotecaDeFilme.ViewModel.Generos;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -69,5 +74,131 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Cadastra Genero
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Cadastrar(GeneroViewModel view)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var genero = new Genero()
+                {
+                    GeneroId = view.GeneroId,
+                    Descricao = view.Descricao
+                };
+
+                _generoBLO.Salvar(genero);
+
+                retorno.Mensagem
+                    = string.Format("Genero {0} - {1} Cadastrado com Sucesso. <br />", view.GeneroId, view.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch(ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch(Exception)
+            {
+                retorno.Mensagem = "Erro ao Cadastrar.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
+        }
+
+        /// <summary>
+        /// Mostra a pagina para Editar o Genero.
+        /// </summary>
+        /// <param name="id">Valor a ser Comparado.</param>
+        /// <returns>Retorna View com a Id Encontrada.</returns>
+        [HttpGet]
+        public ActionResult Editar(string id)
+        {
+            var genero = _generoBLO.BuscarPorId(id);
+            var view = new GeneroViewModel(genero);
+            return View(view);
+        }
+
+        /// <summary>
+        /// Recebe os dados da View e envia para o Context
+        /// </summary>
+        /// <param name="view">Valor a ser Editado</param>
+        /// <returns></returns>
+        [HttpPost]
+        public  ActionResult Editar(GeneroViewModel view)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var genero = new Genero()
+                {
+                    GeneroId = view.GeneroId,
+                    Descricao = view.Descricao
+                };
+
+                _generoBLO.Editar(genero);
+
+                retorno.Mensagem
+                    = string.Format("Genero {0} - {1} Editado com Sucesso. <br />", view.GeneroId, view.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch(ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Editar.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+
+            return Json(retorno);
+        }
+
+        /// <summary>
+        /// Recebe os dados da View e envia para o Context
+        /// </summary>
+        /// <param name="id">Valor a ser Excluido</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Excluir(string id)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var generoMensagem = _generoBLO.BuscarPorId(id);
+                _generoBLO.Excluir(id);
+                retorno.Mensagem
+                   = string.Format("Genero {0} - {1} Excluido com Sucesso. <br />", generoMensagem.GeneroId, generoMensagem.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch(ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Excluir.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
+        }
+
     }
 }

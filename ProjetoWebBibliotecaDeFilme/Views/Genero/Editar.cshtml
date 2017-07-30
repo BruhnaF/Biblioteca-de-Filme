@@ -1,31 +1,30 @@
-﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas.IdiomaViewModel
+﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.Generos.GeneroViewModel
 
 @{
     ViewBag.Title = "Editar";
 }
 
-<h2>Editar Idioma</h2>
+<h2>Editar Genero</h2>
 
-@using (Html.BeginForm("Editar","Editar", FormMethod.Post))
+@using (Html.BeginForm("Editar", "Editar", FormMethod.Post))
 {
-    @Html.HiddenFor(x => x.IdiomaId)
-
+    @Html.HiddenFor(x => x.GeneroId)
     <div class="row">
         <div class="form-group">
-            @Html.LabelFor(x => x.IdiomaId, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.IdiomaId, new { @class = "form-control", id = "codigoIdioma", @readonly = true })
+            @Html.LabelFor(x => x.GeneroId, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.GeneroId, new { @class = "form-control", id = "codigoGenero", @readonly = true })
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "nomeIdioma" })
+            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "nomeGenero" })
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="btnSalvar">Editar</button>
-            @Html.ActionLink("Voltar", "Index", "Idioma", new { @class = "btn btn-primary" })
+            @Html.ActionLink("Voltar", "Index", "Genero", new { @class = "btn btn-primary" })
         </div>
     </div>
 }
@@ -35,16 +34,13 @@
 {
     <script>
         $("#btnSalvar").on("click", function () {
-            var campos = { IdiomaId: $("#codigoIdioma").val(), Descricao: $("#nomeIdioma").val() };
+            var campos = { GeneroId: $("#codigoGenero").val(), Descricao: $("#nomeGenero").val() };
             $.blockUI({ message: '<img src="../../carregando.gif" />' });
-
-            EditarIdioma(campos);
+            EditarGenero(campos);
         });
 
-        // Editar Idiomas.
-        function EditarIdioma(campos)
-        {
-            var urlDestino = '@Url.Action("Editar", "Idioma")';
+        function EditarGenero(campos) {
+            var urlDestino = '@Url.Action("Editar", "Genero")';
 
             $.ajax({
                 url: urlDestino,
@@ -55,7 +51,6 @@
                     $("#modalMensagens").modal();
                     $.unblockUI();
                 }
-
             });
         }
     </script>

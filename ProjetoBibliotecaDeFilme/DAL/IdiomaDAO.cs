@@ -80,12 +80,20 @@ namespace ProjetoBibliotecaDeFilme.DAL
             return jaExiste;
         }
 
+        /// <summary>
+        /// Edita Idioma.
+        /// </summary>
+        /// <param name="idioma">Idioma a ser Editado. </param>
         public void Editar(Idioma idioma)
         {
             _context.Entry(idioma).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Excluir Idioma.
+        /// </summary>
+        /// <param name="idioma">Idioma a ser Excluido.</param>
         public void Excluir(Idioma idioma)
         {
             _context.Idiomas.Remove(idioma);

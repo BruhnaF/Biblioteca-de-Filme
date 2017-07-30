@@ -1,29 +1,29 @@
-﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas.IdiomaViewModel
+﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.Generos.GeneroViewModel
 
 @{
     ViewBag.Title = "Cadastrar";
 }
 
-<h2>Cadastrar Novo Idioma</h2>
+<h2>Cadastrar Genero</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Post))
 {
     <div class="row">
         <div class="form-group">
-            @Html.LabelFor(x => x.IdiomaId, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.IdiomaId, new { @class = "form-control", id = "codigoIdioma" })
+            @Html.LabelFor(x => x.GeneroId, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.GeneroId, new { @class = "form-control", id = "inputCodigo" })
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "nomeIdioma" })
+            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputDescricao" })
         </div>
     </div>
     <div class="row">
         <div class="form-group">
-            <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
-            @Html.ActionLink("Voltar", "Index", "Idioma", new { @class = "btn btn-primary" })
+            <button class="btn btn-primary" type="submit" id="btnSalvar">Salvar</button>
+            @Html.ActionLink("Voltar", "Index", "Genero", new { @class = "btn btn-primary" })
         </div>
     </div>
 }
@@ -34,18 +34,18 @@
     <script>
         $(document).ready(function () {
 
-            $("#btnSalvar").on("click", function () {
+            $("#btnSalvar").on("click", function (evento) {
                 $.blockUI({ message: '<img src="../../carregando.gif" />' });
-                var campos = { IdiomaId: $("#codigoIdioma").val(), Descricao: $("#nomeIdioma").val() };
+                var campos = { GeneroId: $("#inputCodigo").val(), Descricao: $("#inputDescricao").val() };
 
-            CadastraIdioma(campos);
+                CadastrarGenero(campos);
 
-        });
+                evento.preventDefault();
+            });
 
-        // Cadastra Idiomas.
-        function CadastraIdioma(campos)
+        function CadastrarGenero(campos)
         {
-            var urlDestino = '@Url.Action("Cadastrar", "Idioma")';
+            var urlDestino = '@Url.Action("Cadastrar", "Genero")';
 
             $.ajax({
                 url: urlDestino,

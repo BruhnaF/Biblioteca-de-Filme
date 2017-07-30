@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace ProjetoWebBibliotecaDeFilme.ViewModel
+namespace ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas
 {
     /// <summary>
     /// Representa tela Index Idioma Cadastrados.

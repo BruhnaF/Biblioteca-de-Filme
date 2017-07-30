@@ -1,6 +1,6 @@
 ﻿using ProjetoBibliotecaDeFilme.Model;
 
-namespace ProjetoWebBibliotecaDeFilme.ViewModel
+namespace ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas
 {
     /// <summary>
     /// Representa os Itens de Uma Tabela de Idiomas.

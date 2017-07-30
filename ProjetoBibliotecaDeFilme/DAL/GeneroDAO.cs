@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Data.Entity;
 
 namespace ProjetoBibliotecaDeFilme.DAL
 {
@@ -46,9 +47,52 @@ namespace ProjetoBibliotecaDeFilme.DAL
             _context.SaveChanges();
         }
 
-        internal Genero BuscarPorId(string id)
+        /// <summary>
+        /// Editar Genero.
+        /// </summary>
+        /// <param name="genero">Genero a ser Editado.</param>
+        public void Editar(Genero genero)
+        {
+            _context.Entry(genero).State = EntityState.Modified;
+            _context.SaveChanges(); 
+        }
+
+        /// <summary>
+        /// Busca Genero por Id no Context.
+        /// </summary>
+        /// <param name="id">Valor a ser Comparado.</param>
+        /// <returns>Retorna Genero Encontrado</returns>
+        public Genero BuscarPorId(string id)
         {
             return _context.Generos.Find(id);
+        }
+
+        /// <summary>
+        /// Verifica se Genero Informado já existe no Context.
+        /// </summary>
+        /// <param name="genero">Genero a ser Comparado.</param>
+        /// <returns>Retorna True se Verdadeiro e False se Falso.</returns>
+        public bool JaExiste(Genero genero)
+        {
+            var jaExiste = false;
+            var generoId = _context.Generos.Where(x=>x.GeneroId == genero.GeneroId).FirstOrDefault();
+            var descricao = _context.Generos.Where(x=>x.Descricao == genero.Descricao).FirstOrDefault();
+            if (generoId != null || descricao != null)
+            {
+                jaExiste = true;
+            }
+            return jaExiste;
+        }
+
+
+        /// <summary>
+        /// Excluir Genero.
+        /// </summary>
+        /// <param name="genero">Valor a ser Excluido.</param>
+        public void Excluir(Genero genero)
+        {
+            _context.Generos.Remove(genero);
+            _context.SaveChanges();
         }
     }
 }

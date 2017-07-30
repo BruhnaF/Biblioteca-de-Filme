@@ -3,7 +3,7 @@ using ProjetoBibliotecaDeFilme.Enumerador;
 using ProjetoBibliotecaDeFilme.Model;
 using ProjetoBibliotecaDeFilme.Utils;
 using ProjetoWebBibliotecaDeFilme.Helper;
-using ProjetoWebBibliotecaDeFilme.ViewModel;
+using ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -118,9 +118,10 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         }
 
         /// <summary>
-        /// Mostra a Pagina Para Editar o Idioma
+        /// Mostra a Pagina Para Editar o Idioma.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Valor a ser Comparado.</param>
+        /// <returns>Retorna View com a Id Encontrada.</returns>
         [HttpGet]
         public ActionResult Editar(string id)
         {
@@ -132,7 +133,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <summary>
         /// Recebe os dados da View e envia para o Context
         /// </summary>
-        /// <param name="idioma"></param>
+        /// <param name="view">Valor a ser Editado</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Editar(IdiomaViewModel view)
@@ -145,6 +146,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     IdiomaId = view.IdiomaId,
                     Descricao = view.Descricao
                 };
+
                 _idiomaBLO.Editar(idioma);
 
                 retorno.Mensagem
@@ -168,6 +170,11 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             return Json(retorno);
         }
 
+        /// <summary>
+        /// Recebe os dados da View e envia para o Context
+        /// </summary>
+        /// <param name="id">Valor a ser Excluido</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Excluir(string id)
         {

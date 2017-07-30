@@ -149,11 +149,12 @@
     </Compile>
     <Compile Include="Helper\RetornoMensagem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\GeneroIndexViewModel.cs" />
-    <Compile Include="ViewModel\Genero_Item_TabelaViewModel.cs" />
-    <Compile Include="ViewModel\IdiomaIndexViewModel.cs" />
-    <Compile Include="ViewModel\IdiomaViewModel.cs" />
-    <Compile Include="ViewModel\Idioma_Item_TabelaViewModel.cs" />
+    <Compile Include="ViewModel\Generos\GeneroIndexViewModel.cs" />
+    <Compile Include="ViewModel\Generos\GeneroViewModel.cs" />
+    <Compile Include="ViewModel\Generos\Genero_Item_TabelaViewModel.cs" />
+    <Compile Include="ViewModel\Idiomas\IdiomaIndexViewModel.cs" />
+    <Compile Include="ViewModel\Idiomas\IdiomaViewModel.cs" />
+    <Compile Include="ViewModel\Idiomas\Idioma_Item_TabelaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="carregando.gif" />
@@ -210,6 +211,8 @@
     <Content Include="Views\Shared\_ModalConfirmacao.cshtml" />
     <Content Include="Views\Genero\_genero_Tabela.cshtml" />
     <Content Include="Views\Genero\Index.cshtml" />
+    <Content Include="Views\Genero\Cadastrar.cshtml" />
+    <Content Include="Views\Genero\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

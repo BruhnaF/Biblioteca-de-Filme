@@ -8,6 +8,9 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Generos
     /// </summary>
     public class GeneroIndexViewModel
     {
+        /// <summary>
+        /// Construtor Padrão.
+        /// </summary>
         public GeneroIndexViewModel()
         {
             Itens = new List<Genero_Item_TabelaViewModel>();
@@ -20,7 +23,7 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Generos
         public string Descricao { get; set; }
 
         /// <summary>
-        /// Representa uma lista de Generos.
+        /// Representa Lista de Generos.
         /// </summary>
         public List<Genero_Item_TabelaViewModel> Itens { get; set; }
     }

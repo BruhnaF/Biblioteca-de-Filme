@@ -1,0 +1,55 @@
+﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.Filmes.FilmeIndexViewModel
+
+@{
+    ViewBag.Title = "Lista de Filmes Cadastrados";
+}
+
+<h2>Lista de Filmes</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputNome" })
+        </div>
+    </div>
+
+    <div class="row" id="tabelaFilmes">
+        @{ Html.RenderPartial("_filme_Tabela", Model.Itens); }
+    </div>
+}
+
+@section scripts{
+    <script>
+        var _filmeId = "";
+        $.blockUI({ message: '<img src = "../../carregando.gif" />' });
+
+        var _nomeFilme = $("#inputNome");
+        var _tabelaFilmes = $("#tabelaFilmes");
+
+        _nomeFilme.on("keyup", function () {
+            $.blockUI({ message: '<img src = "../../carregando.gif" />' });
+            var texto = _nomeFilme.val();
+            if (texto.length > 3) {
+                CarregaTabelaFilme(_nomeFilme.val());
+            }
+            else { CarregaTabelaFilme("") }
+        });
+
+        $(document).ready(function () {
+            CarregaTabelaFilme("");
+        });
+
+        function CarregaTabelaFilme(filme){
+            var url = '@Url.Action("BuscarItensFilmes", "Filme")';
+            var parametro = { nome: filme };
+            _tabelaFilmes.load(url, parametro);
+            setTimeout(function () {
+                $.unblockUI();
+               // bindTabela();
+            }, 500);
+        }
+
+    </script>
+}

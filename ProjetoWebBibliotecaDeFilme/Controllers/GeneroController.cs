@@ -18,7 +18,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         private readonly GeneroBLO _generoBLO;
 
         /// <summary>
-        /// Construtor Padrão
+        /// Construtor Padrão.
         /// </summary>
         public GeneroController()
         {
@@ -28,7 +28,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <summary>
         /// Mostra lista de Generos Cadastrados.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Tela de Generos Cadastrados.</returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -37,10 +37,10 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Busca Itens de Generos Cadastrados.
         /// </summary>
-        /// <param name="nome"></param>
-        /// <returns></returns>
+        /// <param name="nome">Valor a ser Comparado</param>
+        /// <returns>Itens da Lista de Generos</returns>
         [HttpPost]
         public ActionResult BuscarItensGeneros(string nome)
         {

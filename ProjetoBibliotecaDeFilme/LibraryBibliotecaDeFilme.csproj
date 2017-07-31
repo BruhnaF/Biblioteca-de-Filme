@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\FilmeBLO.cs" />
     <Compile Include="BLL\GeneroBLO.cs" />
     <Compile Include="BLL\IdiomaBLO.cs" />
     <Compile Include="Context\ContextBibliotecaDeFilme.cs" />
+    <Compile Include="DAL\FilmeDAO.cs" />
     <Compile Include="DAL\GeneroDAO.cs" />
     <Compile Include="DAL\IdiomaDAO.cs" />
     <Compile Include="Enumerador\TipoMensagem.cs" />
@@ -61,7 +63,12 @@
     <Compile Include="Migrations\201707272029365_CriacaodeGeneros.Designer.cs">
       <DependentUpon>201707272029365_CriacaodeGeneros.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707302138128_CriacaodeFilmes.cs" />
+    <Compile Include="Migrations\201707302138128_CriacaodeFilmes.Designer.cs">
+      <DependentUpon>201707302138128_CriacaodeFilmes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Filme.cs" />
     <Compile Include="Model\Genero.cs" />
     <Compile Include="Model\Idioma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707272029365_CriacaodeGeneros.resx">
       <DependentUpon>201707272029365_CriacaodeGeneros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707302138128_CriacaodeFilmes.resx">
+      <DependentUpon>201707302138128_CriacaodeFilmes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

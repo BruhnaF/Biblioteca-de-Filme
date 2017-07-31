@@ -1,10 +1,8 @@
 ﻿using ProjetoBibliotecaDeFilme.Context;
 using ProjetoBibliotecaDeFilme.Model;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System;
 using System.Data.Entity;
+using System.Linq;
 
 namespace ProjetoBibliotecaDeFilme.DAL
 {

@@ -184,6 +184,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 var idiomaMensagem = _idiomaBLO.BuscarPorId(id);
 
                 _idiomaBLO.Excluir(id);
+
                 retorno.Mensagem
                    = string.Format("Idioma {0} - {1} Excluido com Sucesso. <br />", idiomaMensagem.IdiomaId, idiomaMensagem.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;

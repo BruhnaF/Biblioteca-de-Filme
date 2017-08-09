@@ -179,7 +179,9 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             try
             {
                 var generoMensagem = _generoBLO.BuscarPorId(id);
+
                 _generoBLO.Excluir(id);
+
                 retorno.Mensagem
                    = string.Format("Genero {0} - {1} Excluido com Sucesso. <br />", generoMensagem.GeneroId, generoMensagem.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;

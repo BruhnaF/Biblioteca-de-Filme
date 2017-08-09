@@ -1,0 +1,57 @@
+﻿@model ProjetoWebBibliotecaDeFilme.ViewModel.Filmes.FilmeViewModel
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar Filme</h2>
+
+@using (Html.BeginForm("Editar", "Editar", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.FilmeId)
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.FilmeId, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.FilmeId, new { @class = "form-control", id = "codigoFilme", @readonly = true })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "nomeFilme" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" id="btnSalvar">Editar</button>
+            @Html.ActionLink("Voltar", "Index", "Filme", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+}
+
+@Html.Partial("_ModalResultado")
+
+@section scripts
+{
+    <script>
+        $("#btnSalvar").on("click", function () {
+            var campos = { FilmeId: $("#codigoFilme").val(), Descricao: $("#nomeFilme").val() };
+            $.blockUI({ message: '<img src = "../../carregando.gif">' });
+            EditarFilme(campos);
+        })
+
+        function EditarFilme(campos){
+            var urlDestino = '@Url.Action("Editar","Filme")';
+
+            $.ajax({
+                url: urlDestino,
+                method: "POST",
+                data: campos,
+                success: function (resposta) {
+                    PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                    $("#modalMensagens").modal();
+                    $.unblockUI();
+                }
+            });
+        }
+    </script>
+}

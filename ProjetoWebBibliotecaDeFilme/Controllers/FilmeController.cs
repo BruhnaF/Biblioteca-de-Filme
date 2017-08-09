@@ -1,5 +1,10 @@
 ﻿using ProjetoBibliotecaDeFilme.BLL;
+using ProjetoBibliotecaDeFilme.Enumerador;
+using ProjetoBibliotecaDeFilme.Model;
+using ProjetoBibliotecaDeFilme.Utils;
+using ProjetoWebBibliotecaDeFilme.Helper;
 using ProjetoWebBibliotecaDeFilme.ViewModel.Filmes;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -52,6 +57,141 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 }
                 ).OrderBy(x => x.FilmeId).ToList();
             return PartialView("_filme_Tabela", listaView);
+        }
+
+        /// <summary>
+        /// Mostra Tela para Cadastrar Filme
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Cadastrar()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Cadastra Filme 
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Cadastrar(FilmeViewModel view)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var filme = new Filme()
+                {
+                    FilmeId = view.FilmeId,
+                    Descricao = view.Descricao
+                };
+
+                _filmeBLO.Salvar(filme);
+                retorno.Mensagem
+                    = string.Format("Filme {0} - {1} Cadastrado com Sucesso. <br />", view.FilmeId, view.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Cadastrar.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
+        }
+
+        /// <summary>
+        /// Mostra pagina para Editar Filme.
+        /// </summary>
+        /// <param name="id">Filme a ser Editado.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Editar(string id)
+        {
+            var filme = _filmeBLO.BuscarPorId(id);
+            var view = new FilmeViewModel(filme);
+            return View(view);
+        }
+
+        /// <summary>
+        /// Editar Filme.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Editar(FilmeViewModel view)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var filme = new Filme()
+                {
+                    FilmeId = view.FilmeId,
+                    Descricao = view.Descricao
+                };
+
+                _filmeBLO.Editar(filme);
+
+                retorno.Mensagem
+                    = string.Format("Filme {0} - {1} Editado com Sucesso. <br />", view.FilmeId, view.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Editar.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
+        }
+
+        /// <summary>
+        /// Excluir Filme
+        /// </summary>
+        /// <param name="id">Valor a ser Excluido</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Excluir(string id)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var filmeMensagem = _filmeBLO.BuscarPorId(id);
+
+                _filmeBLO.Excluir(id);
+
+                retorno.Mensagem
+                    = string.Format("Filme {0} - {1} Excluido com Sucesso. <br />", filmeMensagem.FilmeId, filmeMensagem.Descricao);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = false;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception)
+            {
+                retorno.Mensagem = "Erro ao Excluir.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
         }
     }
 }

@@ -26,6 +26,7 @@
 @section scripts{
     <script>
         var _generoId = "";
+
         $.blockUI({ message: '<img src = "../../carregando.gif" />'});
 
         function abreConfirmacaoExclusao(generoId) {
@@ -42,9 +43,7 @@
         }
 
         $("#btnConfirmacaoSim").on("click", function () {
-
             $.blockUI({ message: '<img src="../../carregando.gif" />' });
-
             ExcluirGenero(_generoId);
         });
 

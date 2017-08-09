@@ -1,6 +1,7 @@
 ﻿using ProjetoBibliotecaDeFilme.Context;
 using ProjetoBibliotecaDeFilme.Model;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace ProjetoBibliotecaDeFilme.DAL
@@ -43,6 +44,32 @@ namespace ProjetoBibliotecaDeFilme.DAL
         public Filme BuscarPorId(string id)
         {
             return _context.Filmes.Find(id);
+        }
+
+        /// <summary>
+        /// Salvar Filme.
+        /// </summary>
+        /// <param name="filme">Filme a ser Salvo.</param>
+        public void Salvar(Filme filme)
+        {
+            _context.Filmes.Add(filme);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Editar Filme.
+        /// </summary>
+        /// <param name="filme">Filme a ser Editado.</param>
+        public void Editar(Filme filme)
+        {
+            _context.Entry(filme).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void Excluir(Filme filme)
+        {
+            _context.Filmes.Remove(filme);
+            _context.SaveChanges();
         }
     }
 }

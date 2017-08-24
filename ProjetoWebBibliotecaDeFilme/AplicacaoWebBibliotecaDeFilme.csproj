@@ -221,6 +221,8 @@
     <Content Include="Views\Filme\_filme_Tabela.cshtml" />
     <Content Include="Views\Filme\Cadastrar.cshtml" />
     <Content Include="Views\Filme\Editar.cshtml" />
+    <Content Include="Views\Filme\_tabelaGeneros.cshtml" />
+    <Content Include="Views\Filme\_tabelaIdiomas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

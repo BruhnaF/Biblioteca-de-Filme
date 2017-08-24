@@ -4,7 +4,7 @@
         <tr>
             <th>Código</th>
             <th>Descrição</th>
-            <th colspan="2">Opções</th>
+            <th colspan="5">Opções</th>
         </tr>
     </thead>
     <tbody>
@@ -15,8 +15,13 @@
                 <tr>
                     <td>@item.FilmeId</td>
                     <td>@item.Descricao</td>
+                    
                     <td>
                         @Html.ActionLink("Editar", "Editar", "Filme", new { id = item.FilmeId },
+                        new { @class = "btn btn-primary" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalhes", "Detalhes", "Filme", new { id = item.FilmeId },
                         new { @class = "btn btn-primary" })
                     </td>
                     <td>

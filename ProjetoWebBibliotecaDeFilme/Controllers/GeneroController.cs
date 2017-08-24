@@ -97,7 +97,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 retorno.Mensagem
                     = string.Format("Genero {0} - {1} Cadastrado com Sucesso. <br />", view.GeneroId, view.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
-                retorno.Resultado = false;
+                retorno.Resultado = true;
             }
             catch(ProjetoException ex)
             {
@@ -149,7 +149,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 retorno.Mensagem
                     = string.Format("Genero {0} - {1} Editado com Sucesso. <br />", view.GeneroId, view.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
-                retorno.Resultado = false;
+                retorno.Resultado = true;
             }
             catch(ProjetoException ex)
             {
@@ -185,7 +185,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 retorno.Mensagem
                    = string.Format("Genero {0} - {1} Excluido com Sucesso. <br />", generoMensagem.GeneroId, generoMensagem.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
-                retorno.Resultado = false;
+                retorno.Resultado = true;
             }
             catch(ProjetoException ex)
             {

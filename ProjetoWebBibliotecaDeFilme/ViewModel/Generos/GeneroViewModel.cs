@@ -1,5 +1,7 @@
 ﻿using ProjetoBibliotecaDeFilme.Model;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Web.Mvc;
 
 namespace ProjetoWebBibliotecaDeFilme.ViewModel.Generos
 {
@@ -34,5 +36,9 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Generos
         /// </summary>
         [DisplayName("Descrição")]
         public string Descricao { get; set; }
+
+        public List<SelectListItem> Filmes { get; set; }
+
+        public List<GeneroViewModel> ListaFilmes { get; set; }
     }
 }

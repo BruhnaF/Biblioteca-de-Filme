@@ -41,7 +41,7 @@ namespace ProjetoBibliotecaDeFilme.DAL
         /// </summary>
         /// <param name="id">Valor a ser Comparado.</param>
         /// <returns>Valor Encontrado.</returns>
-        public Filme BuscarPorId(string id)
+        public Filme BuscarPorId(int id)
         {
             return _context.Filmes.Find(id);
         }
@@ -70,6 +70,23 @@ namespace ProjetoBibliotecaDeFilme.DAL
         {
             _context.Filmes.Remove(filme);
             _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Verifica se Filme Informado já existe no Context.
+        /// </summary>
+        /// <param name="filme">Filme a ser Comparado.</param>
+        /// <returns>Retorna True se Verdadeiro e False se Falso.</returns>
+        public bool JaExiste(Filme filme)
+        {
+            var jaExiste = false;
+            var filmeId = _context.Filmes.Where(x => x.FilmeId == filme.FilmeId).FirstOrDefault();
+            var descricao = _context.Filmes.Where(x => x.Descricao == filme.Descricao).FirstOrDefault();
+            if (filmeId != null || descricao != null)
+            {
+                jaExiste = true;
+            }
+            return jaExiste;
         }
     }
 }

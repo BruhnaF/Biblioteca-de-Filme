@@ -5,7 +5,7 @@
         /// <summary>
         /// Representa FilmeId.
         /// </summary>
-        public string FilmeId { get; set; }
+        public int FilmeId { get; set; }
 
         /// <summary>
         /// Representa Descrição.

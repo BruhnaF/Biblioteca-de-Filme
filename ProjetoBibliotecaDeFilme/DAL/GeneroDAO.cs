@@ -60,7 +60,7 @@ namespace ProjetoBibliotecaDeFilme.DAL
         /// </summary>
         /// <param name="id">Valor a ser Comparado.</param>
         /// <returns>Retorna Genero Encontrado</returns>
-        public Genero BuscarPorId(string id)
+        public Genero BuscarPorId(int id)
         {
             return _context.Generos.Find(id);
         }
@@ -73,15 +73,14 @@ namespace ProjetoBibliotecaDeFilme.DAL
         public bool JaExiste(Genero genero)
         {
             var jaExiste = false;
-            var generoId = _context.Generos.Where(x=>x.GeneroId == genero.GeneroId).FirstOrDefault();
+           // var generoId = _context.Generos.Where(x=>x.GeneroId == genero.GeneroId).FirstOrDefault();
             var descricao = _context.Generos.Where(x=>x.Descricao == genero.Descricao).FirstOrDefault();
-            if (generoId != null || descricao != null)
+            if (descricao != null)
             {
                 jaExiste = true;
             }
             return jaExiste;
         }
-
 
         /// <summary>
         /// Excluir Genero.

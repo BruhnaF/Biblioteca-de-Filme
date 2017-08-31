@@ -27,6 +27,10 @@
     <script>
         var _generoId = "";
 
+        $(document).ready(function () {
+            CarregaTabelaGenero("");
+        });
+
         $.blockUI({ message: '<img src = "../../carregando.gif" />'});
 
         function abreConfirmacaoExclusao(generoId) {
@@ -59,9 +63,6 @@
             else { CarregaTabelaGenero("") }
         });
 
-        $(document).ready(function () {
-            CarregaTabelaGenero("");
-        });
 
         function CarregaTabelaGenero(genero){
             var url = '@Url.Action("BuscarItensGeneros", "Genero")';

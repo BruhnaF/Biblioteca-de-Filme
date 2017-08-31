@@ -57,7 +57,7 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Filmes
         /// Representa FilmeId
         /// </summary>
         [DisplayName("Código do Filme")]
-        public string FilmeId { get; set; }
+        public int FilmeId { get; set; }
 
         /// <summary>
         /// Representa Descrição
@@ -69,13 +69,13 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Filmes
         /// Representa GeneroId
         /// </summary>
         [DisplayName("Generos")]
-        public string GeneroId { get; set; }
+        public int GeneroId { get; set; }
 
         /// <summary>
         /// Representa IdiomaId
         /// </summary>
         [DisplayName("Idiomas")]
-        public string IdiomaId { get; set; }
+        public int IdiomaId { get; set; }
 
         public List<SelectListItem> Generos { get; set; }
         public List<GeneroViewModel> ListaGeneros { get; set; }

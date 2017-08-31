@@ -29,7 +29,7 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Generos
         /// Representa o GeneroId
         /// </summary>
         [DisplayName("Código do Genero")]
-        public string GeneroId { get; set; }
+        public int GeneroId { get; set; }
 
         /// <summary>
         /// Representa a Descrição

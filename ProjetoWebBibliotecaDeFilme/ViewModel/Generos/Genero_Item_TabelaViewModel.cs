@@ -8,7 +8,7 @@
         /// <summary>
         /// Representa o Id do Genero.
         /// </summary>
-        public string GeneroId { get; set; }
+        public int GeneroId { get; set; }
 
         /// <summary>
         /// Representa a Descricao do Genero

@@ -55,25 +55,9 @@
     <Compile Include="DAL\GeneroDAO.cs" />
     <Compile Include="DAL\IdiomaDAO.cs" />
     <Compile Include="Enumerador\TipoMensagem.cs" />
-    <Compile Include="Migrations\201707221740009_CriacaodeIdiomas.cs" />
-    <Compile Include="Migrations\201707221740009_CriacaodeIdiomas.Designer.cs">
-      <DependentUpon>201707221740009_CriacaodeIdiomas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707272029365_CriacaodeGeneros.cs" />
-    <Compile Include="Migrations\201707272029365_CriacaodeGeneros.Designer.cs">
-      <DependentUpon>201707272029365_CriacaodeGeneros.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707302138128_CriacaodeFilmes.cs" />
-    <Compile Include="Migrations\201707302138128_CriacaodeFilmes.Designer.cs">
-      <DependentUpon>201707302138128_CriacaodeFilmes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708170319294_RelacionamentoFilme_Genero.cs" />
-    <Compile Include="Migrations\201708170319294_RelacionamentoFilme_Genero.Designer.cs">
-      <DependentUpon>201708170319294_RelacionamentoFilme_Genero.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708171315168_RelacionamentoFilme_Idioma.cs" />
-    <Compile Include="Migrations\201708171315168_RelacionamentoFilme_Idioma.Designer.cs">
-      <DependentUpon>201708171315168_RelacionamentoFilme_Idioma.cs</DependentUpon>
+    <Compile Include="Migrations\201708291307506_AtualizacaoBibliotecaFilmes.cs" />
+    <Compile Include="Migrations\201708291307506_AtualizacaoBibliotecaFilmes.Designer.cs">
+      <DependentUpon>201708291307506_AtualizacaoBibliotecaFilmes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Filme.cs" />
@@ -84,25 +68,13 @@
     <Compile Include="Utils\Validacao.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707221740009_CriacaodeIdiomas.resx">
-      <DependentUpon>201707221740009_CriacaodeIdiomas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707272029365_CriacaodeGeneros.resx">
-      <DependentUpon>201707272029365_CriacaodeGeneros.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707302138128_CriacaodeFilmes.resx">
-      <DependentUpon>201707302138128_CriacaodeFilmes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708170319294_RelacionamentoFilme_Genero.resx">
-      <DependentUpon>201708170319294_RelacionamentoFilme_Genero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708171315168_RelacionamentoFilme_Idioma.resx">
-      <DependentUpon>201708171315168_RelacionamentoFilme_Idioma.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708291307506_AtualizacaoBibliotecaFilmes.resx">
+      <DependentUpon>201708291307506_AtualizacaoBibliotecaFilmes.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

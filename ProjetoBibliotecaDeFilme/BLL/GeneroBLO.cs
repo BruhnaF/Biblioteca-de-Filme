@@ -46,7 +46,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
         /// </summary>
         /// <param name="id">Valor a ser Comparado.</param>
         /// <returns>Retorna Genero Encontrado</returns>
-        public Genero BuscarPorId(string id)
+        public Genero BuscarPorId(int id)
         {
             return _generoDAO.BuscarPorId(id);
         }
@@ -80,21 +80,19 @@ namespace ProjetoBibliotecaDeFilme.BLL
         public void ValidaGenero(Genero genero)
         {
             var mensagem = new StringBuilder();
-            var codigoEhNulo = Validacao.EhVazio(genero.GeneroId);
-            var tamanhoCodigoEhMaior = Validacao.TamanhoEhMaior(genero.GeneroId, 9);
+            //var codigoEhNulo = Validacao.EhVazio(genero.GeneroId.ToString());
             var descricaoEhNulo = Validacao.EhVazio(genero.Descricao);
             var tamanhoDescricaoEhMAior = Validacao.TamanhoEhMaior(genero.Descricao, 50);
 
-            if (codigoEhNulo)
-                mensagem.AppendLine("Codigo não pode ser Vazio.<br />");
-            if (tamanhoCodigoEhMaior)
-                mensagem.Append("Codigo não pode ser maior que 9 caracteres.< br /> ");
+            //if (codigoEhNulo)
+            //    mensagem.AppendLine("Codigo não pode ser Vazio.<br />");
+          
             if (descricaoEhNulo)
                 mensagem.Append("Descrição não pode ser Vazio. <br />");
             if (tamanhoDescricaoEhMAior)
                 mensagem.Append("Descrição não pode ser maior que 50 caracteres. <br />");
 
-            var EhOk = !codigoEhNulo && !tamanhoCodigoEhMaior && !descricaoEhNulo && !tamanhoDescricaoEhMAior;
+            var EhOk = /*!codigoEhNulo &&*/ !descricaoEhNulo && !tamanhoDescricaoEhMAior;
 
             if (!EhOk)
             {
@@ -120,7 +118,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
         /// Excluir Genero.
         /// </summary>
         /// <param name="idGenero">Valor a ser Excluido.</param>
-        public void Excluir(string idGenero)
+        public void Excluir(int idGenero)
         {
             var genero = _generoDAO.BuscarPorId(idGenero);
             _generoDAO.Excluir(genero);

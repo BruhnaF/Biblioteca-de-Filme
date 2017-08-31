@@ -8,11 +8,7 @@
 
 @using (Html.BeginForm(null, null, FormMethod.Post))
 {
-    <div class="row col-md-12">
-        <div class="form-group col-md-2">
-            @Html.LabelFor(x => x.FilmeId, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.FilmeId, new { @class = "form-control", id = "inputCodigo" })
-        </div>
+    <div class="row col-md-12">      
         <div class="form-group col-md-4">
             @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
             @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputDescricao" })
@@ -68,8 +64,13 @@
         var _tabelaIdiomas = $("#tabelaIdiomas");
         var _tabelaGeneros = $("#tabelaGeneros");
 
-        ///Ao clicar no botão para adicionar Genero ao Filme.
         $(document).ready(function () {
+            var url = '@Url.Action("CarregarTabelaGenero", "Filme")';
+               _tabelaGeneros.load(url);
+        });
+
+
+        ///Ao clicar no botão para adicionar Genero ao Filme.
             _btnAddGenero.on("click", function (evento) {
 
                 var generoSelecionado = _ddlGeneros.val();
@@ -89,6 +90,8 @@
                             {
                                 var url = '@Url.Action("CarregarTabelaGenero", "Filme")';
                                 _tabelaGeneros.load(url);
+                                PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                                $("#modalMensagens").modal();
                             }
                         }
                     });
@@ -100,7 +103,6 @@
 
                 evento.preventDefault();
             });
-        });
 
         ///Ao clicar no botão para adicionar Idioma ao Filme.
 
@@ -122,6 +124,8 @@
                     else {
                         var url = '@Url.Action("CarregarTabelaIdioma", "Filme")';
                         _tabelaIdiomas.load(url);
+                        PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                        $("#modalMensagens").modal();
                     }
                 }
             });
@@ -150,6 +154,8 @@
                     {
                          var url = '@Url.Action("CarregarTabelaIdioma", "Filme")';
                          _tabelaIdiomas.load(url);
+                         PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                         $("#modalMensagens").modal();
                     }
                 }
             });
@@ -172,6 +178,8 @@
                     {
                         var url = '@Url.Action("CarregarTabelaGenero", "Filme")';
                         _tabelaGeneros.load(url);
+                        PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                        $("#modalMensagens").modal();
                     }
                 }
             });

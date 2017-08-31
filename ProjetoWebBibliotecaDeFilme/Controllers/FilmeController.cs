@@ -54,7 +54,9 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                 filmeTemp.ListaIdiomas.Add(view);
 
-                retorno.Mensagem = string.Empty;
+                retorno.Mensagem
+                   = string.Format("Idioma {0} - {1} Adicionado com Sucesso ao Filme. <br />",
+                       idioma.IdiomaId, idioma.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
                 retorno.Resultado = true;
             }
@@ -79,7 +81,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <param name="codGenero">cod do Genero a ser Adicionado.</param>
         /// <returns>Objeto com dados de Sucesso ou Falha.</returns>
         [HttpPost]
-        public ActionResult AdicionarGenero(string codGenero)
+        public ActionResult AdicionarGenero(int codGenero)
         {
             var retorno = new RetornoMensagem();
             try
@@ -93,7 +95,9 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                 filmeTemp.ListaGeneros.Add(view);
 
-                retorno.Mensagem = string.Empty;
+                retorno.Mensagem
+                  = string.Format("Genero {0} - {1} Adicionado com Sucesso ao Filme. <br />",
+                      genero.GeneroId, genero.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
                 retorno.Resultado = true;
             }
@@ -135,14 +139,10 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                         var filme = _filmeBLO.Listar().Where(x => x.FilmeId == filmeTemp.FilmeId).FirstOrDefault();
 
-                        foreach (var item in filme.Idiomas.ToList())
-                        {
-                            if (item.IdiomaId == idiomaView.IdiomaId)
-                            {
-                                filme.Idiomas.Remove(item);
-                                _filmeBLO.RemoverItensLivro(filme);
-                            }
-                        }
+                        var idiomaRemove = filme.Idiomas.Where(x => x.IdiomaId == codIdioma).FirstOrDefault();
+                        filme.Idiomas.Remove(idiomaRemove);
+
+                        _filmeBLO.RemoverItensFilme(filme);
                     }
                 }
                 else
@@ -174,7 +174,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <param name="codGenero">Genero a ser Removido.</param>
         /// <returns>Objeto com dados de Sucesso ou Falha.</returns>
         [HttpPost]
-        public ActionResult RemoverGeneroDaLista(string codGenero)
+        public ActionResult RemoverGeneroDaLista(int codGenero)
         {
             var retorno = new RetornoMensagem();
             try
@@ -187,14 +187,10 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                     var filme = _filmeBLO.Listar().Where(x => x.FilmeId == filmeTemp.FilmeId).FirstOrDefault();
 
-                    foreach (var item in filme.Generos.ToList())
-                    {
-                        if (item.GeneroId == generoView.GeneroId)
-                        {
-                            filme.Generos.Remove(item);
-                            _filmeBLO.RemoverItensLivro(filme);
-                        }
-                    }
+                    var generoRemove = filme.Generos.Where(x => x.GeneroId == codGenero).FirstOrDefault();
+                    filme.Generos.Remove(generoRemove);
+
+                    _filmeBLO.RemoverItensFilme(filme);
                 }
                 else
                     throw new ProjetoException("Genero não encontrado na Lista.");
@@ -264,7 +260,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             if (!string.IsNullOrEmpty(nome))
                 listaFilmes = listaFilmes.Where
                     (x => x.Descricao.ToUpper().Contains
-                    (nome.ToUpper()) || x.FilmeId.ToUpper().Contains(nome.ToUpper()));
+                    (nome.ToUpper()));
             var listaView
                 = listaFilmes.Select(x => new Filme_Item_TabelaViewModel
                 {
@@ -334,7 +330,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                 _filmeBLO.Salvar(filme);
                 retorno.Mensagem
-                    = string.Format("Filme {0} - {1} Cadastrado com Sucesso. <br />", view.FilmeId, view.Descricao);
+                    = string.Format("Filme {0} Cadastrado com Sucesso. <br />", view.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
                 retorno.Resultado = true;
             }
@@ -359,7 +355,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <param name="id">Filme a ser Editado.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Editar(string id)
+        public ActionResult Editar(int id)
         {
             var filme = _filmeBLO.BuscarPorId(id);
 
@@ -454,20 +450,33 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <param name="id">Valor a ser Excluido</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(int id)
         {
             var retorno = new RetornoMensagem();
             try
             {
-                var filmeMensagem = _filmeBLO.BuscarPorId(id);
+                var filme = _filmeBLO.BuscarPorId(id);
+                
+                if (filme.Generos.Count > 0 || (filme.Idiomas.Count > 0))
+                {
+                    retorno.Mensagem
+                   = string.Format("Filme {0} - {1} Possui Generos e/ou Idiomas Adicionados. <br />",
+                       filme.FilmeId, filme.Descricao);
+                    retorno.TipoMensagem = TipoMensagem.Sucesso;
+                    retorno.Resultado = false;
+                }
+                else
+                {
+                    _filmeBLO.Excluir(id);
 
-                _filmeBLO.Excluir(id);
-
-                retorno.Mensagem
-                    = string.Format("Filme {0} - {1} Excluido com Sucesso. <br />",
-                        filmeMensagem.FilmeId, filmeMensagem.Descricao);
-                retorno.TipoMensagem = TipoMensagem.Sucesso;
-                retorno.Resultado = true;
+                    retorno.Mensagem
+                        = string.Format("Filme {0} - {1} Excluido com Sucesso. <br />",
+                            filme.FilmeId, filme.Descricao);
+                    retorno.TipoMensagem = TipoMensagem.Sucesso;
+                    retorno.Resultado = true;
+                }
+                   
+                
             }
             catch (ProjetoException ex)
             {

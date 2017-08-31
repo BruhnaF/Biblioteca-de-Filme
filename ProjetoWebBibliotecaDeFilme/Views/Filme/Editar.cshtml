@@ -20,9 +20,8 @@
             @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputDescricao" })
         </div>
     </div>
-
     <div class="row col-md-12">
-        <div class="form-group col-md-4" style="margin:inherit">
+        <div class="form-group col-md-6" style="margin-left: -23px">
             <div class="col-md-8">
                 @Html.LabelFor(x => x.GeneroId, new { @class = "control-label" })
                 @Html.DropDownListFor(x => x.GeneroId, Model.Generos, new { @class = "form-control", id = "ddlGeneros" })
@@ -31,9 +30,7 @@
                 <button class="btn btn-primary" type="button" id="btnAddGenero"> Adicionar Genero </button>
             </div>
         </div>
-    </div>
-    <div class="row col-md-12">
-        <div class="form-group col-md-4" style="margin:inherit">
+        <div class="form-group col-md-6" style="margin-left: -23px">
             <div class="col-md-8">
                 @Html.LabelFor(x => x.IdiomaId, new { @class = "control-label" })
                 @Html.DropDownListFor(x => x.IdiomaId, Model.Idiomas, new { @class = "form-control", id = "ddlIdiomas" })
@@ -43,20 +40,23 @@
             </div>
         </div>
     </div>
-
+    <div class="row col-md-12">
+        <div class="form-group col-md-6" style="margin-left: -23px">
+            <div id="tabelaGeneros">
+                @Html.Partial("_tabelaGeneros", new List<ProjetoWebBibliotecaDeFilme.ViewModel.Generos.GeneroViewModel>())
+            </div>
+        </div>
+        <div class="form-group col-md-6" style="margin-left: -23px">
+            <div id="tabelaIdiomas">
+                @Html.Partial("_tabelaIdiomas", new List<ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas.IdiomaViewModel>())
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="btnSalvar">Editar</button>
             @Html.ActionLink("Voltar", "Index", "Filme", new { @class = "btn btn-primary" })
         </div>
-    </div>
-
-    <div id="tabelaGeneros">
-        @Html.Partial("_tabelaGeneros", new List<ProjetoWebBibliotecaDeFilme.ViewModel.Generos.GeneroViewModel>())
-    </div>
-
-    <div id="tabelaIdiomas">
-        @Html.Partial("_tabelaIdiomas", new List<ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas.IdiomaViewModel>())
     </div>
 }
 
@@ -75,7 +75,9 @@
         var _tabelaIdiomas = $("#tabelaIdiomas");
         var _tabelaGeneros = $("#tabelaGeneros");
 
-        if (_tabelaGeneros.val() != null) {
+        $(document).ready(function () {
+
+            if (_tabelaGeneros.val() != null) {
 
             var url = '@Url.Action("CarregarTabelaGenero", "Filme")';
             _tabelaGeneros.load(url);
@@ -85,9 +87,11 @@
             var url = '@Url.Action("CarregarTabelaIdioma", "Filme")';
            _tabelaIdiomas.load(url);
         }
+        });
+
 
         ///Ao clicar no botão para adicionar Genero ao Filme.
-        $(document).ready(function () {
+
             _btnAddGenero.on("click", function (evento) {
 
                 var generoSelecionado = _ddlGeneros.val();
@@ -107,6 +111,8 @@
                             {
                                 var url = '@Url.Action("CarregarTabelaGenero", "Filme")';
                                 _tabelaGeneros.load(url);
+                                PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                                $("#modalMensagens").modal();
                             }
                         }
                     });
@@ -118,7 +124,6 @@
 
                 evento.preventDefault();
             });
-        });
 
         ///Ao clicar no botão para adicionar Idioma ao Filme.
        _btnAddIdioma.on("click", function (evento) {
@@ -139,6 +144,8 @@
                     else {
                         var url = '@Url.Action("CarregarTabelaIdioma", "Filme")';
                         _tabelaIdiomas.load(url);
+                        PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                        $("#modalMensagens").modal();
                     }
                 }
             });
@@ -167,6 +174,8 @@
                     {
                          var url = '@Url.Action("CarregarTabelaIdioma", "Filme")';
                          _tabelaIdiomas.load(url);
+                         PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                         $("#modalMensagens").modal();
                     }
                 }
             });
@@ -189,6 +198,8 @@
                     {
                         var url = '@Url.Action("CarregarTabelaGenero", "Filme")';
                         _tabelaGeneros.load(url);
+                        PreencherModal(resposta.TipoMensagem, resposta.Mensagem);
+                        $("#modalMensagens").modal();
                     }
                 }
             });

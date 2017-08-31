@@ -7,13 +7,13 @@ namespace ProjetoBibliotecaDeFilme.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class CriacaodeIdiomas : IMigrationMetadata
+    public sealed partial class AtualizacaoBibliotecaFilmes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CriacaodeIdiomas));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AtualizacaoBibliotecaFilmes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707221740009_CriacaodeIdiomas"; }
+            get { return "201708291307506_AtualizacaoBibliotecaFilmes"; }
         }
         
         string IMigrationMetadata.Source

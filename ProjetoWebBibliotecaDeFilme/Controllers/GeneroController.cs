@@ -49,8 +49,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             if (!string.IsNullOrEmpty(nome))
                 listaGeneros
                     = listaGeneros.Where(x =>
-                    x.Descricao.ToUpper().Contains(nome.ToUpper())
-                    || x.GeneroId.ToUpper().Contains(nome.ToUpper()));
+                    x.Descricao.ToUpper().Contains(nome.ToUpper()));                    ;
 
             var listaView
                 = listaGeneros
@@ -84,9 +83,11 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         public ActionResult Cadastrar(GeneroViewModel view)
         {
             var retorno = new RetornoMensagem();
+            var genero = new Genero();
+
             try
             {
-                var genero = new Genero()
+                genero = new Genero()
                 {
                     GeneroId = view.GeneroId,
                     Descricao = view.Descricao
@@ -95,7 +96,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 _generoBLO.Salvar(genero);
 
                 retorno.Mensagem
-                    = string.Format("Genero {0} - {1} Cadastrado com Sucesso. <br />", view.GeneroId, view.Descricao);
+                    = string.Format("Genero {0} Cadastrado com Sucesso. <br />", view.Descricao);
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
                 retorno.Resultado = true;
             }
@@ -105,7 +106,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 retorno.TipoMensagem = TipoMensagem.Alerta;
                 retorno.Resultado = false;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 retorno.Mensagem = "Erro ao Cadastrar.<br />";
                 retorno.TipoMensagem = TipoMensagem.Erro;
@@ -120,7 +121,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <param name="id">Valor a ser Comparado.</param>
         /// <returns>Retorna View com a Id Encontrada.</returns>
         [HttpGet]
-        public ActionResult Editar(string id)
+        public ActionResult Editar(int id)
         {
             var genero = _generoBLO.BuscarPorId(id);
             var view = new GeneroViewModel(genero);
@@ -157,7 +158,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 retorno.TipoMensagem = TipoMensagem.Alerta;
                 retorno.Resultado = false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 retorno.Mensagem = "Erro ao Editar.<br />";
                 retorno.TipoMensagem = TipoMensagem.Erro;
@@ -173,7 +174,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         /// <param name="id">Valor a ser Excluido</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(int id)
         {
             var retorno = new RetornoMensagem();
             try

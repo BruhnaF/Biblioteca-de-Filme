@@ -7,13 +7,7 @@
 <h2>Cadastrar Genero</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Post))
-{
-    <div class="row">
-        <div class="form-group">
-            @Html.LabelFor(x => x.GeneroId, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.GeneroId, new { @class = "form-control", id = "inputCodigo" })
-        </div>
-    </div>
+{   
     <div class="row">
         <div class="form-group">
             @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })

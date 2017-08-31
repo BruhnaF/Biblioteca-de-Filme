@@ -12,9 +12,7 @@ namespace ProjetoBibliotecaDeFilme.Model
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [MaxLength(9)]
-        public string GeneroId { get; set; }
+        public int GeneroId { get; set; }
 
         [Required]
         [MaxLength(50)]

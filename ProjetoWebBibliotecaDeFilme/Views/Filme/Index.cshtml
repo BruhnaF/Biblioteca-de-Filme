@@ -18,7 +18,7 @@
     <div class="row" id="tabelaFilmes">
         @{ Html.RenderPartial("_filme_Tabela", Model.Itens); }
     </div>
-}
+            }
 
 @Html.Partial("_ModalConfirmacao")
 @Html.Partial("_ModalResultado")
@@ -26,19 +26,28 @@
 @section scripts{
     <script>
         var _filmeId = "";
+        var _name = "";
+        var _nomeFilme = $("#inputNome");
+        var _tabelaFilmes = $("#tabelaFilmes");
+
+        $(document).ready(function () {
+            CarregaTabelaFilme("");
+        });
 
         $.blockUI({ message: '<img src="../../carregando.gif" />' });
 
-        function abreConfirmacaoExclusao(filmeId) {
+        function abreConfirmacaoExclusao(filmeId, name) {            
             _filmeId = filmeId;
-            AddMensagemConfirmacao("Deseja Excluir " + filmeId + " ?");
+            _name = name;
+            AddMensagemConfirmacao("Deseja Excluir " + filmeId + " - " + _name + " ?");
             $("#modalMensagensConfirmacao").modal();
         }
 
         function bindTabela() {
             $(".btnExcluir").on("click", function () {
                 _filmeId = $(this).prop('id');
-                abreConfirmacaoExclusao(_filmeId);
+                _name = $(this).prop('name');
+                abreConfirmacaoExclusao(_filmeId, _name);
             });
         }
 
@@ -49,9 +58,6 @@
             ExcluirFilme(_filmeId);
         });
 
-        var _nomeFilme = $("#inputNome");
-        var _tabelaFilmes = $("#tabelaFilmes");
-
         _nomeFilme.on("keyup", function () {
             $.blockUI({ message: '<img src="../../carregando.gif" />' });
             var texto = _nomeFilme.val();
@@ -61,9 +67,6 @@
             else { CarregaTabelaFilme("") }
         });
 
-        $(document).ready(function () {
-            CarregaTabelaFilme("");
-        });
 
         function CarregaTabelaFilme(filme){
             var url = '@Url.Action("BuscarItensFilmes", "Filme")';

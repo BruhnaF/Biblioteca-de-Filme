@@ -20,6 +20,7 @@ namespace ProjetoBibliotecaDeFilme.Context
        public DbSet<Idioma> Idiomas { get; set; }
        public DbSet<Genero> Generos { get; set; }
        public DbSet<Filme> Filmes { get; set; }
+       public DbSet<NomedoFilme> NomesdoFilme { get; set; } 
 
         /// <summary>
         /// Ajuste ao criar entity.

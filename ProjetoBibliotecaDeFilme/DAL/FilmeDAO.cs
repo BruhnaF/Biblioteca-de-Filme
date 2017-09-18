@@ -80,12 +80,12 @@ namespace ProjetoBibliotecaDeFilme.DAL
         public bool JaExiste(Filme filme)
         {
             var jaExiste = false;
-            var filmeId = _context.Filmes.Where(x => x.FilmeId == filme.FilmeId).FirstOrDefault();
-            var descricao = _context.Filmes.Where(x => x.Descricao == filme.Descricao).FirstOrDefault();
-            if (filmeId != null || descricao != null)
-            {
-                jaExiste = true;
-            }
+            var filmeId = _context.Filmes.Where(x => x.FilmeId == filme.FilmeId).FirstOrDefault();       
+               
+                if (filmeId != null)
+                {
+                    jaExiste = true;
+                }            
             return jaExiste;
         }
     }

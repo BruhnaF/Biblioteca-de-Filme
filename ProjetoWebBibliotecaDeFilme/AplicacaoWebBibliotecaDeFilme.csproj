@@ -159,6 +159,8 @@
     <Compile Include="ViewModel\Idiomas\IdiomaIndexViewModel.cs" />
     <Compile Include="ViewModel\Idiomas\IdiomaViewModel.cs" />
     <Compile Include="ViewModel\Idiomas\Idioma_Item_TabelaViewModel.cs" />
+    <Compile Include="ViewModel\NomesdoFilme\NomedoFilmeViewModel.cs" />
+    <Compile Include="ViewModel\NomesdoFilme\NomedoFilme_Item_TabelaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="carregando.gif" />
@@ -223,6 +225,7 @@
     <Content Include="Views\Filme\Editar.cshtml" />
     <Content Include="Views\Filme\_tabelaGeneros.cshtml" />
     <Content Include="Views\Filme\_tabelaIdiomas.cshtml" />
+    <Content Include="Views\Filme\_tabelaNomedoFilme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

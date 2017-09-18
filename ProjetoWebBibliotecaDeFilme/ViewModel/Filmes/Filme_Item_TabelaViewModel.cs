@@ -1,4 +1,7 @@
-﻿namespace ProjetoWebBibliotecaDeFilme.ViewModel.Filmes
+﻿using ProjetoWebBibliotecaDeFilme.ViewModel.NomesdoFilme;
+using System.Collections.Generic;
+
+namespace ProjetoWebBibliotecaDeFilme.ViewModel.Filmes
 {
     public class Filme_Item_TabelaViewModel
     {
@@ -10,6 +13,6 @@
         /// <summary>
         /// Representa Descrição.
         /// </summary>
-        public string Descricao { get; set; }
+        public List<NomedoFilmeViewModel> listaNomeFilme { get; set; }
     }
 }

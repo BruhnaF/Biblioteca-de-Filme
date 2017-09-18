@@ -11,6 +11,7 @@ namespace ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas
         /// Representa o Id do Idioma.
         /// </summary>
         public string IdiomaId { get; set; }
+
         /// <summary>
         /// Representa a Descricao do Idioma.
         /// </summary>

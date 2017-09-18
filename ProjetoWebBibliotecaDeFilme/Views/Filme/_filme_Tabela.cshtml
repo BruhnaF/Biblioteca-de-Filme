@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th>Código</th>
-            <th>Descrição</th>
+            <th>Nome</th>
             <th colspan="5">Opções</th>
         </tr>
     </thead>
@@ -14,7 +14,12 @@
             {
                 <tr>
                     <td>@item.FilmeId</td>
-                    <td>@item.Descricao</td>
+                    <td>
+                    @foreach (var nome in item.listaNomeFilme)
+                    {
+                        <b>@nome.Nome</b> <br />
+                    }
+                    </td>
                     
                     <td>
                         @Html.ActionLink("Editar", "Editar", "Filme", new { id = item.FilmeId },
@@ -25,7 +30,7 @@
                         new { @class = "btn btn-primary" })
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary btnExcluir" id="@item.FilmeId" name="@item.Descricao">
+                        <button type="button" class="btn btn-primary btnExcluir" id="@item.FilmeId">
                             Excluir
                         </button>
                     </td>

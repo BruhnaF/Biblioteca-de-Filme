@@ -6,6 +6,7 @@ using ProjetoWebBibliotecaDeFilme.Helper;
 using ProjetoWebBibliotecaDeFilme.ViewModel.Filmes;
 using ProjetoWebBibliotecaDeFilme.ViewModel.Generos;
 using ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas;
+using ProjetoWebBibliotecaDeFilme.ViewModel.NomesdoFilme;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
         private readonly GeneroBLO _generoBLO;
         private readonly IdiomaBLO _idiomaBLO;
+        private readonly NomedoFilmeBLO _nomedoFilmeBLO;
 
         /// <summary>
         /// Construtor Padrão.
@@ -31,9 +33,50 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             _filmeBLO = new FilmeBLO();
             _generoBLO = new GeneroBLO();
             _idiomaBLO = new IdiomaBLO();
+            _nomedoFilmeBLO = new NomedoFilmeBLO();
         }
 
         private static FilmeViewModel filmeTemp { get; set; }
+
+        /// <summary>
+        /// Adicionar o Nome do Filme ao FilmeTemp.
+        /// </summary>
+        /// <param name="codNomeFilme">Nome a ser adicionado.</param>
+        /// <returns>Objeto com dados de sucesso ou falha.</returns>
+        [HttpPost]
+        public ActionResult AdicionarNomeFilme(int idFilme, string nomeFilme, string idioma)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var nomedoFilmeView = new NomedoFilmeViewModel { Nome = nomeFilme, IdiomaId = idioma };
+                filmeTemp.ListaNomedoFilme.Add(nomedoFilmeView);
+
+                if (idFilme > 0)
+                {
+                    var filme = _filmeBLO.BuscarPorId(idFilme);
+                    filme.Nomes.Add(new NomedoFilme { Nome = nomeFilme, IdiomaId = idioma });
+                    _filmeBLO.Editar(filme);
+                }
+                
+                retorno.Mensagem = ("Nome do Filme e Idioma Adicionado com Sucesso ao Filme. <br />");
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = true;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception ex)
+            {
+                retorno.Mensagem = "Erro ao Adicionar Nome do Filme ao Filme";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
+        }
 
         /// <summary>
         /// Adiciona Idioma ao FilmeTemp.
@@ -139,10 +182,13 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                         var filme = _filmeBLO.Listar().Where(x => x.FilmeId == filmeTemp.FilmeId).FirstOrDefault();
 
-                        var idiomaRemove = filme.Idiomas.Where(x => x.IdiomaId == codIdioma).FirstOrDefault();
-                        filme.Idiomas.Remove(idiomaRemove);
+                        if (filme.FilmeId > 0)
+                        {
+                            var idiomaRemove = filme.Idiomas.Where(x => x.IdiomaId == codIdioma).FirstOrDefault();
+                            filme.Idiomas.Remove(idiomaRemove);
 
-                        _filmeBLO.RemoverItensFilme(filme);
+                            _filmeBLO.RemoverItensFilme(filme);
+                        }
                     }
                 }
                 else
@@ -186,11 +232,13 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     filmeTemp.ListaGeneros.Remove(generoView);
 
                     var filme = _filmeBLO.Listar().Where(x => x.FilmeId == filmeTemp.FilmeId).FirstOrDefault();
+                    if (filme.FilmeId > 0)
+                    {
+                        var generoRemove = filme.Generos.Where(x => x.GeneroId == codGenero).FirstOrDefault();
+                        filme.Generos.Remove(generoRemove);
 
-                    var generoRemove = filme.Generos.Where(x => x.GeneroId == codGenero).FirstOrDefault();
-                    filme.Generos.Remove(generoRemove);
-
-                    _filmeBLO.RemoverItensFilme(filme);
+                        _filmeBLO.RemoverItensFilme(filme);
+                    }
                 }
                 else
                     throw new ProjetoException("Genero não encontrado na Lista.");
@@ -218,8 +266,53 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             return Json(retorno);
         }
 
+        [HttpPost]
+        public ActionResult RemoverNomeFilmeDaLista(int idNomeFilme, string nomeFilme, string idioma)
+        {
+            var retorno = new RetornoMensagem();
+            try
+            {
+                var nomeFilmeView = filmeTemp.ListaNomedoFilme.Where(x => x.Nome == nomeFilme && x.IdiomaId == idioma).FirstOrDefault();
+                if (nomeFilmeView != null)
+                {
+                    filmeTemp.ListaNomedoFilme.Remove(nomeFilmeView);
+
+                    if (idNomeFilme > 0)
+                    {
+                        var filme = _filmeBLO.Listar().Where(x => x.FilmeId == filmeTemp.FilmeId).FirstOrDefault();
+                        var nomeFilmeRemover = filme.Nomes.Where(x => x.Id == idNomeFilme).FirstOrDefault();
+                        filme.Nomes.Remove(nomeFilmeRemover);
+                        _filmeBLO.RemoverItensFilme(filme);
+                    }
+
+                }
+                else
+                    throw new ProjetoException("NomeFilme não encontrado na Lista.");
+
+                retorno.Mensagem
+                     = string.Format("NomeFilme {0} - {1} Removido com Sucesso do Filme. <br />",
+                       nomeFilmeView.Nome, nomeFilmeView.IdiomaId);
+                retorno.TipoMensagem = TipoMensagem.Sucesso;
+                retorno.Resultado = true;
+            }
+            catch (ProjetoException ex)
+            {
+                retorno.Mensagem = ex.Message;
+                retorno.TipoMensagem = TipoMensagem.Alerta;
+                retorno.Resultado = false;
+            }
+            catch (Exception ex)
+            {
+                retorno.Mensagem = "Erro ao Remover Nome do Filme.<br />";
+                retorno.TipoMensagem = TipoMensagem.Erro;
+                retorno.Resultado = false;
+            }
+            return Json(retorno);
+        }
+
+
         /// <summary>
-        /// Carrega Tabela de Idiomas
+        /// Carrega Tabela de Idiomas.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -234,7 +327,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         }
 
         /// <summary>
-        /// Carrega Tabela de Generos
+        /// Carrega Tabela de Generos.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -249,6 +342,20 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         }
 
         /// <summary>
+        /// Carrega a Tabela de Nome do Filme.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CarregarTabelaNomedoFilme()
+        {
+            var view = new List<NomedoFilmeViewModel>();
+            if (filmeTemp.ListaNomedoFilme.Any())
+                view = filmeTemp.ListaNomedoFilme;
+
+            return PartialView("_tabelaNomedoFilme", view);
+        }
+
+        /// <summary>
         /// Buscar Itens da Lista de Filmes Cadastrados.
         /// </summary>
         /// <param name="nome">Valor a ser Comparado.</param>
@@ -259,13 +366,12 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             var listaFilmes = _filmeBLO.Listar();
             if (!string.IsNullOrEmpty(nome))
                 listaFilmes = listaFilmes.Where
-                    (x => x.Descricao.ToUpper().Contains
-                    (nome.ToUpper()));
+                    (x => x.Nomes.Where(xs=>xs.Nome.Contains(nome)).Count()>0);
             var listaView
                 = listaFilmes.Select(x => new Filme_Item_TabelaViewModel
                 {
                     FilmeId = x.FilmeId,
-                    Descricao = x.Descricao
+                    listaNomeFilme = x.Nomes.Select(xn => new NomedoFilmeViewModel(xn)).ToList()
                 }
                 ).OrderBy(x => x.FilmeId).ToList();
             return PartialView("_filme_Tabela", listaView);
@@ -280,10 +386,12 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
         {
             var generos = PegarSelectListaGenero();
             var idiomas = PegarSelectListaIdioma();
+            var nomedoFilme = PegarSelectListaNomedoFilme();
 
             var view = new FilmeViewModel();
             view.Generos.AddRange(generos);
             view.Idiomas.AddRange(idiomas);
+            view.NomesdoFilme.AddRange(nomedoFilme);
 
             filmeTemp = view;
 
@@ -307,8 +415,18 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     FilmeId = view.FilmeId,
                     Descricao = view.Descricao,
                     Generos = new List<Genero>(),
-                    Idiomas = new List<Idioma>()
+                    Idiomas = new List<Idioma>(),
+                    Nomes = new List<NomedoFilme>()
                 };
+
+                if (filmeTemp.ListaNomedoFilme.Any())
+                {
+                    foreach (var item in filmeTemp.ListaNomedoFilme)
+                    {
+                        var nome = new NomedoFilme { IdiomaId = item.IdiomaId, Nome = item.IdiomaId};
+                        filme.Nomes.Add(nome);
+                    }
+                }
 
                 if (filmeTemp.ListaGeneros.Any())
                 {
@@ -330,7 +448,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
                 _filmeBLO.Salvar(filme);
                 retorno.Mensagem
-                    = string.Format("Filme {0} Cadastrado com Sucesso. <br />", view.Descricao);
+                    = "Filme Cadastrado com Sucesso. <br />";
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
                 retorno.Resultado = true;
             }
@@ -361,12 +479,20 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
 
             var generos = PegarSelectListaGenero();
             var idiomas = PegarSelectListaIdioma();
+            var nomedoFilme = PegarSelectListaNomedoFilme();
 
             var view = new FilmeViewModel(filme);
             view.Generos.AddRange(generos);
             view.Idiomas.AddRange(idiomas);
+            view.NomesdoFilme.AddRange(nomedoFilme);
 
             filmeTemp = view;
+
+            if (filme.Nomes != null)
+            {
+                var listaNomesdeFilmes = filme.Nomes.Select(x => new NomedoFilmeViewModel(x));
+                view.ListaNomedoFilme.AddRange(listaNomesdeFilmes);
+            }
 
             if (filme.Generos != null)
             {
@@ -401,7 +527,8 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     FilmeId = view.FilmeId,
                     Descricao = view.Descricao,
                     Generos = new List<Genero>(),
-                    Idiomas = new List<Idioma>()
+                    Idiomas = new List<Idioma>(),
+                    Nomes = new List<NomedoFilme>()
                 };
 
                 if (filmeTemp.ListaGeneros.Any())
@@ -425,7 +552,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 _filmeBLO.Editar(filme);
 
                 retorno.Mensagem
-                    = string.Format("Filme {0} - {1} Editado com Sucesso. <br />", view.FilmeId, view.Descricao);
+                    = "Filme Editado com Sucesso. <br />";
                 retorno.TipoMensagem = TipoMensagem.Sucesso;
                 retorno.Resultado = true;
             }
@@ -456,7 +583,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
             try
             {
                 var filme = _filmeBLO.BuscarPorId(id);
-                
+
                 if (filme.Generos.Count > 0 || (filme.Idiomas.Count > 0))
                 {
                     retorno.Mensagem
@@ -475,8 +602,8 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                     retorno.TipoMensagem = TipoMensagem.Sucesso;
                     retorno.Resultado = true;
                 }
-                   
-                
+
+
             }
             catch (ProjetoException ex)
             {
@@ -538,6 +665,18 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 var selectList = idiomas.Select(x => new SelectListItem
                 { Text = x.Descricao, Value = x.IdiomaId.ToString() }).ToList();
 
+                itens.AddRange(selectList);
+            }
+            return itens;
+        }
+        private List<SelectListItem> PegarSelectListaNomedoFilme()
+        {
+            var itens = new List<SelectListItem>();
+            var nomedoFilme = _nomedoFilmeBLO.Listar();
+            if (nomedoFilme != null)
+            {
+                var selectList = nomedoFilme.Select(x => new SelectListItem
+                { Text = x.Nome, Value = x.Id.ToString() }).ToList();
                 itens.AddRange(selectList);
             }
             return itens;

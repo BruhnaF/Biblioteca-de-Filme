@@ -10,8 +10,8 @@
 {
     <div class="row">
         <div class="form-group">
-            @Html.LabelFor(x => x.Descricao, new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "inputNome" })
+            @Html.LabelFor(x => x.Nome, new { @class = "control-label" })
+            @Html.TextBoxFor(x => x.Nome, new { @class = "form-control", id = "inputNome" })
         </div>
     </div>
 
@@ -26,7 +26,6 @@
 @section scripts{
     <script>
         var _filmeId = "";
-        var _name = "";
         var _nomeFilme = $("#inputNome");
         var _tabelaFilmes = $("#tabelaFilmes");
 
@@ -36,18 +35,16 @@
 
         $.blockUI({ message: '<img src="../../carregando.gif" />' });
 
-        function abreConfirmacaoExclusao(filmeId, name) {            
+        function abreConfirmacaoExclusao(filmeId) {
             _filmeId = filmeId;
-            _name = name;
-            AddMensagemConfirmacao("Deseja Excluir " + filmeId + " - " + _name + " ?");
+            AddMensagemConfirmacao("Deseja Excluir  o Filme ?");
             $("#modalMensagensConfirmacao").modal();
         }
 
         function bindTabela() {
             $(".btnExcluir").on("click", function () {
                 _filmeId = $(this).prop('id');
-                _name = $(this).prop('name');
-                abreConfirmacaoExclusao(_filmeId, _name);
+                abreConfirmacaoExclusao(_filmeId);
             });
         }
 
@@ -59,9 +56,9 @@
         });
 
         _nomeFilme.on("keyup", function () {
-            $.blockUI({ message: '<img src="../../carregando.gif" />' });
             var texto = _nomeFilme.val();
             if (texto.length > 3) {
+            $.blockUI({ message: '<img src="../../carregando.gif" />' });
                 CarregaTabelaFilme(_nomeFilme.val());
             }
             else { CarregaTabelaFilme("") }

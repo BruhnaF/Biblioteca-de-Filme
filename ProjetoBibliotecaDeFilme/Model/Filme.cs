@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoBibliotecaDeFilme.Model
 {
@@ -11,8 +10,8 @@ namespace ProjetoBibliotecaDeFilme.Model
 
         }
 
-        [Key]        
-        public int FilmeId  { get; set; }
+        [Key]
+        public int FilmeId { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -20,6 +19,6 @@ namespace ProjetoBibliotecaDeFilme.Model
 
         public virtual List<Genero> Generos { get; set; }
         public virtual List<Idioma> Idiomas { get; set; }
-
+        public virtual List<NomedoFilme> Nomes { get; set; }
     }
 }

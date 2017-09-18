@@ -50,19 +50,22 @@
     <Compile Include="BLL\FilmeBLO.cs" />
     <Compile Include="BLL\GeneroBLO.cs" />
     <Compile Include="BLL\IdiomaBLO.cs" />
+    <Compile Include="BLL\NomedoFilmeBLO.cs" />
     <Compile Include="Context\ContextBibliotecaDeFilme.cs" />
     <Compile Include="DAL\FilmeDAO.cs" />
     <Compile Include="DAL\GeneroDAO.cs" />
     <Compile Include="DAL\IdiomaDAO.cs" />
+    <Compile Include="DAL\NomedoFilmeDAO.cs" />
     <Compile Include="Enumerador\TipoMensagem.cs" />
-    <Compile Include="Migrations\201708291307506_AtualizacaoBibliotecaFilmes.cs" />
-    <Compile Include="Migrations\201708291307506_AtualizacaoBibliotecaFilmes.Designer.cs">
-      <DependentUpon>201708291307506_AtualizacaoBibliotecaFilmes.cs</DependentUpon>
+    <Compile Include="Migrations\201709171652596_AtualizacaoNomeFilmes.cs" />
+    <Compile Include="Migrations\201709171652596_AtualizacaoNomeFilmes.Designer.cs">
+      <DependentUpon>201709171652596_AtualizacaoNomeFilmes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Filme.cs" />
     <Compile Include="Model\Genero.cs" />
     <Compile Include="Model\Idioma.cs" />
+    <Compile Include="Model\NomedoFilme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ProjetoException.cs" />
     <Compile Include="Utils\Validacao.cs" />
@@ -72,8 +75,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708291307506_AtualizacaoBibliotecaFilmes.resx">
-      <DependentUpon>201708291307506_AtualizacaoBibliotecaFilmes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709171652596_AtualizacaoNomeFilmes.resx">
+      <DependentUpon>201709171652596_AtualizacaoNomeFilmes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -107,7 +107,7 @@ namespace ProjetoWebBibliotecaDeFilme.Controllers
                 retorno.TipoMensagem = TipoMensagem.Alerta;
                 retorno.Resultado = false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 retorno.Mensagem = "Erro ao Cadastrar.<br />";
                 retorno.TipoMensagem = TipoMensagem.Erro;

@@ -23,8 +23,21 @@ namespace ProjetoBibliotecaDeFilme.BLL
         /// </summary>
         private readonly FilmeDAO _filmeDAO;
 
+        /// <summary>
+        /// Armazena Instancia do GeneroDAO.
+        /// </summary>
         private readonly GeneroDAO _generoDAO;
+
+        /// <summary>
+        /// Armazena Instancia do IdiomaDAO.
+        /// </summary>
         private readonly IdiomaDAO _idiomaDAO;
+
+        /// <summary>
+        /// Armazena Instancia do NomeFilme.
+        /// </summary>
+        private readonly NomedoFilmeDAO _nomeFilmeDAO;
+
 
         /// <summary>
         /// Construtor Padrão.
@@ -35,6 +48,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
             _filmeDAO = new FilmeDAO(_context);
             _generoDAO = new GeneroDAO(_context);
             _idiomaDAO = new IdiomaDAO(_context);
+            _nomeFilmeDAO = new NomedoFilmeDAO(_context);
         }
 
         /// <summary>
@@ -63,10 +77,17 @@ namespace ProjetoBibliotecaDeFilme.BLL
         public void Salvar(Filme filme)
         {
             var novoFilme = new Filme { FilmeId = filme.FilmeId, Descricao = filme.Descricao,
-                    Generos = new List<Genero>(), Idiomas = new List<Idioma>() };
+                    Generos = new List<Genero>(), Idiomas = new List<Idioma>(),  Nomes = new List<NomedoFilme>()};
 
             if (novoFilme != null)
             {
+
+
+                foreach (var item in filme.Nomes)
+                {                  
+                    novoFilme.Nomes.Add(new NomedoFilme { IdiomaId = item.IdiomaId, Nome = item.Nome});
+                }
+
                 foreach (var item in filme.Generos)
                 {
                     novoFilme.Generos.Add(_generoDAO.BuscarPorId(item.GeneroId));
@@ -79,7 +100,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
             }
 
             ValidaFilme(filme);
-            JaExiste(filme);
+           //JaExiste(filme);
 
             _filmeDAO.Salvar(novoFilme);
         }
@@ -91,7 +112,8 @@ namespace ProjetoBibliotecaDeFilme.BLL
         public void Editar(Filme filme)
         {
             var novoFilme = BuscarPorId(filme.FilmeId);
-            novoFilme.Descricao = filme.Descricao;
+            novoFilme.Descricao = filme.Descricao;           
+                     
 
             if (filme.Generos.Count > 0)
             {
@@ -143,8 +165,7 @@ namespace ProjetoBibliotecaDeFilme.BLL
             var jaExiste = _filmeDAO.JaExiste(filme);
             if (jaExiste)
             {
-                throw new ProjetoException(String.Format("O Filme {0} - {1} Já Existe.",
-                                                         filme.FilmeId, filme.Descricao));
+                throw new ProjetoException("O Filme Já Existe.");
             }
         }
 

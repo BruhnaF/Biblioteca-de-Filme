@@ -1,6 +1,4 @@
-﻿
-
-using ProjetoBibliotecaDeFilme.Model;
+﻿using ProjetoBibliotecaDeFilme.Model;
 using System.ComponentModel;
 
 namespace ProjetoWebBibliotecaDeFilme.ViewModel.Idiomas
